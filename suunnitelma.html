@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <title>Harkkasuunnitelma</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+   </head>
+<body>
+
+<container>
+
+<h1>Harkkatyö</h1>
+
+<h2>Tausta</h2>
+
+<p>Startupin käyttäjätietokantaa päivitetään tällä hetkellä skripteillä (koko tiimi, yleisimmät toimenpiteet), tai SQL komennoilla (devaaja, erikoisemmat toimenpiteet). </p>
+
+<p>Käytössä on PostgreSQL tietokanta render.com palvelussa. </p>
+
+<h2>Tarve</h2>
+
+<p>Devaajan kallisarvoista aikaa voisi säästää jos tiimi voisi itsenäisesti tehdä kaiken käyttäjähallinnan. Toisaalta tiimi vois tehdä käyttäjähallintaa tehokkaammin kaikkialla saatavilla olevalla WebApplikaatiolla, jossa olisi kattavasti käyttäjähallintaan tarvittavat toiminnot.</p>
+
+<h2>Toimintamalli</h2>
+
+<p>Sovelluksen toimintamalli on automatisoitu versio skripteistä. </p>
+
+<h3>Palvelin </h3>
+
+<p>Vastailee HTTP pyyntöihin ja pyörittää SQL komennot WebApplikaatiosta tulevien pyyntöjen mukaisesti.</p>
+
+<h3>Frontend</h3>
+
+<p>Selain-frontend, josta voi valita komentotyypin ja antaa tarvittavat inputit palvelimen suorittamia SQL-hakuja varten. </p>
+
+<figure><img src="aloitus.png"/></figure>
+
+<p><em>Kirjautuminen tapahtuu käyttäjätunnuksella ja salasanalla. Kirjautumisen jälkeen aukeaa lista käyttäjistä ja heidän organisaatioista. </em></p>
+
+<figure><img src="luo-paivita.png"/></figure>
+
+<p><em>Käyttäjähallintaruudut</em></p>
+
+<h2>Toteutus</h2>
+
+<p>Harjoitustyö kehitetään HTML, CSS, JavaScript, node.js, Express ja NPM teknologioilla. Se julkaistaan render.com palvelussa ja koodi tulee näkyviin GitHub palveluun. </p>
+
+<h2>Testaus</h2>
+
+<p>Testaamista varten käytetään kevyempää SQL tietokantaa, jonne luodaan testidataa. H2 tai <a href="https://expressjs.com/en/guide/database-integration.html#sqlite">SQLite</a> vaikuttavat potentiaalisilta tässä vaiheessa. (Vinkit sopiviin kiinnostaa.)</p>
+
+<h2>Tietoturva</h2>
+
+<p><a href="https://12factor.net/config" title="config">Kirjautumistietojen</a> tallentamiseen ja hallitsemiseen käytetään environment -muuttujia <a href="https://www.freecodecamp.org/news/how-to-use-node-environment-variables-with-a-dotenv-file-for-node-js-and-npm/" title="DotEnv freecodecamp">DotEnv NPM paketilla</a>. </p>
+
+<p>.gitignore tiedostoa käytetään tietokannan kirjautumistietoihin liittyen.</p>
+
+<p>WebApplikaatio suojataan salasanalla. Esimerkiksi <a href="https://www.npmjs.com/package/password-protected" title="password-protected">password-protected NPM paketti</a> vaikuttaa mahdolliselta. (Vinkit sopiviin kiinnostaa.)</p>
+
+<p>Osa tietoturvasta toteutetaan madaltamalla riskejä. Sovellukseen tulee näkyviin minimimäärä käyttäjäkohtaista tietoa.</p>
+
+
+</container>
+</body>
+</html>
