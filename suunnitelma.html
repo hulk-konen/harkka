@@ -8,7 +8,6 @@
    </head>
 <body>
 
-<container>
 
 <h1>Harkkatyö</h1>
 
@@ -46,9 +45,11 @@
 
 <p>Harjoitustyö kehitetään HTML, CSS, JavaScript, node.js, Express ja NPM teknologioilla. Se julkaistaan render.com palvelussa ja koodi tulee näkyviin GitHub palveluun. </p>
 
-<h2>Testaus</h2>
+<h2>Testaus ja tietokanta</h2>
 
-<p>Testaamista varten käytetään kevyempää SQL tietokantaa, jonne luodaan testidataa. H2 tai <a href="https://expressjs.com/en/guide/database-integration.html#sqlite">SQLite</a> vaikuttavat potentiaalisilta tässä vaiheessa. (Vinkit sopiviin kiinnostaa.)</p>
+<p>Testaamista varten käytetään PostgreSQL:ää kevyempää SQL tietokantaa, jonne luodaan testidataa. H2 tai <a href="https://expressjs.com/en/guide/database-integration.html#sqlite">SQLite</a> vaikuttavat mahdollisilta tässä vaiheessa. MySQL löytyy dokumentaatio sekä <a href="https://render.com/docs/deploy-mysql">render.com</a> käyttöönottoon, että valmis <a href="https://expressjs.com/en/guide/database-integration.html#mysql">Express</a> moduuli ja vaikuttaa potentiaalisimmalta. (Vinkit sopiviin kiinnostaa.)</p>
+
+<p>Testidatan vaatimuksena on, että se vastaa startupin tietokannan rakennetta. </p>
 
 <h2>Tietoturva</h2>
 
@@ -61,6 +62,7 @@
 <p>Osa tietoturvasta toteutetaan madaltamalla riskejä. Sovellukseen tulee näkyviin minimimäärä käyttäjäkohtaista tietoa.</p>
 
 
-</container>
 </body>
 </html>
+
+
