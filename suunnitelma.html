@@ -86,9 +86,9 @@
 		</em></li>
 	<li> SERIAL tietotyyppiä ei ole SQLite, INTEGER ja ROWID korvaa.</li>
 	<li>ALTER TABLE table ADD COLUMN IF NOT EXISTS: ALTER TABLEssa ei ole IF NOT EXISTS SQLitessä, toiminee ilmankin, mutta pitää olla tarkempi.</li>
-   <li>index ei voi käyttää muuttujan nimenä SQLitessä: index nimiset muuttujat nimetty r_id:ksi</li>
+   <li><em>index</em> ei voi käyttää muuttujan nimenä SQLitessä: <em>index</em> nimiset muuttujat nimetty <em>r_id:ksi</em></li>
 	<li>CREATE EXTENSION IF NOT EXISTS &quot;uuid-ossp”: extensionia ei ole SQLitessä, kokeilen käyttää uuid tekemiseen: <code>char(36) default (lower(hex(randomblob(4)))  &#39;-&#39;  lower(hex(randomblob(2)))  &#39;-4&#39;  substr(lower(hex(randomblob(2))),2)  &#39;-&#39;  substr(&#39;89ab&#39;,abs(random()) % 4 + 1, 1)  substr(lower(hex(randomblob(2))),2)  &#39;-&#39;  lower(hex(randomblob(6)))),
-	</code></li>
+	</code> suoraan muuttujaa luodessa.</li>
 </ol>
 
 <p>Syöttäminen etenee käsin melko ripeästi, jos työ tarvitsee tehdä uudestaan, katson onko se mahdollista automatisoida. Tällä hetkellä 70% SQL skripteistä vaatii joka tapauksessa muutoksia toimiakseen.</p>
