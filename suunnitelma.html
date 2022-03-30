@@ -61,8 +61,36 @@
 
 <p>Osa tietoturvasta toteutetaan madaltamalla riskejä. Sovellukseen tulee näkyviin minimimäärä käyttäjäkohtaista tietoa.</p>
 
+<h2>Päivitys #1 25.3</h2>
+
+<p>SQLite vaikuttaa parhaimmalta testaustietokannalta. Siihen löytyy myös erillinen <a href="https://sqlitebrowser.org">browser</a>.</p>
+
+<p>Tietokantayhteyteen löytyi parempi paketti: <a href="https://knexjs.org">Knex.js</a>. Sen pystyy ilmeisesti suoraan konfiguroimaan testivaiheessa ottamaan yhteys SQLite testitietokantaan ja tuotannossa PostgreSQL tietokantaan. Katso myös <a href="https://stackoverflow.com/questions/16978256/what-is-node-env-and-how-to-use-it-in-express">NODE_ENV</a>.</p>
+
+<p>Suunnitelma tällä hetkellä: </p>
+
+<ol>
+	<li>Luo taulut ja tietokanta SQLitellä</li>
+	<li>Testaa toimivuus luomalla käyttäjä SQL komennoilla</li>
+	<li>Tee varsinainen harkkatyö</li>
+</ol>
+
+<h2>Päivitys #2 30.3</h2>
+
+<p>Startupin tietokannan rakenteen kopioimiseksi löytyi migraatiot. Ne ovat PostgreSQL:ää. SQL tiedostoja on 35 kpl, jotka jokainen suoritetaan SQL clientillä. Teen syöttämistä komentoriviklientilla, lukuunottamatta debuggingia, johon SQLite Browser antaa tarkemman/vaihtoehtoisen virhekoodin. </p>
+
+<p>Muutamia eroavaisuuksia on ilmennyt:</p>
+
+<ol>
+	<li>TIMSESTAMPTZ ei ole olemassa SQLite, korvaan sen pelkällä TIMESTAMP, TIMESTAMP syntaksissa myös pientä eroa (NOW() vs. CURRENT<em>TIMESTAMP)
+		</em></li>
+	<li> SERIAL tietotyyppiä ei ole SQLite, INTEGER ja ROWID korvaa.</li>
+	<li>ALTER TABLE table ADD COLUMN IF NOT EXISTS: ALTER TABLEssa ei ole IF NOT EXISTS SQLitessä, toiminee ilmankin, mutta pitää olla tarkempi.</li>
+	<li>CREATE EXTENSION IF NOT EXISTS &quot;uuid-ossp”: extensionia ei ole SQLitessä, kokeilen käyttää uuid tekemiseen: <code>char(36) default (lower(hex(randomblob(4)))  &#39;-&#39;  lower(hex(randomblob(2)))  &#39;-4&#39;  substr(lower(hex(randomblob(2))),2)  &#39;-&#39;  substr(&#39;89ab&#39;,abs(random()) % 4 + 1, 1)  substr(lower(hex(randomblob(2))),2)  &#39;-&#39;  lower(hex(randomblob(6)))),
+	</code></li>
+</ol>
+
+<p>Syöttäminen etenee käsin melko ripeästi, jos työ tarvitsee tehdä uudestaan, katson onko se mahdollista automatisoida. Tällä hetkellä 70% SQL skripteistä vaatii joka tapauksessa muutoksia toimiakseen.</p>
 
 </body>
 </html>
-
-
