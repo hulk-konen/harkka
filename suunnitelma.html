@@ -82,7 +82,7 @@
 <p>Muutamia eroavaisuuksia on ilmennyt:</p>
 
 <ol>
-	<li>TIMSESTAMPTZ ei ole olemassa SQLite, korvaan sen pelkällä TIMESTAMP, TIMESTAMP syntaksissa myös pientä eroa (NOW() vs. CURRENT<em>TIMESTAMP)
+	<li>TIMSESTAMPTZ ei ole olemassa SQLite, korvaan sen pelkällä TIMESTAMP, TIMESTAMP syntaksissa myös pientä eroa (NOW() vs. CURRENT_TIMESTAMP)
 		</em></li>
 	<li> SERIAL tietotyyppiä ei ole SQLite, INTEGER ja ROWID korvaa.</li>
 	<li>ALTER TABLE table ADD COLUMN IF NOT EXISTS: ALTER TABLEssa ei ole IF NOT EXISTS SQLitessä, toiminee ilmankin, mutta pitää olla tarkempi.</li>
