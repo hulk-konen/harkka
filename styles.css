@@ -65,12 +65,12 @@ em, dfn {
 
 figure {
 	margin:     1.5em 0;
-	width:      80%;
+	width:      100%;
 	text-align: center;
 }
 
 figcaption {
-	font-size:     0.75em;
+	font-size:     0.85em;
 	padding:       0.5em 2em;
 	margin-bottom: 2em;
 }
