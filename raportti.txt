@@ -1,9 +1,1 @@
-timestamptz
-SERIAL
-
-  referral_uuid char(36) default (lower(hex(randomblob(4))) || '-' || lower(hex(randomblob(2))) || '-4' || substr(lower(hex(randomblob(2))),2) || '-' || substr('89ab',abs(random()) % 4 + 1, 1) || substr(lower(hex(randomblob(2))),2) || '-' || lower(hex(randomblob(6)))),
-
-ALTER TABLE journey_templates
-  ADD COLUMN IF NOT EXISTS
-
-  if not exists ei ole
+022  - autoincement ei ehkä tartte

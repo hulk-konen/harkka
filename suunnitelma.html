@@ -95,5 +95,102 @@
 
 <p>Tietokantaa luodessa löytyi mahdollisuus tehdä uusi ominaisuus: Käyttäjää luodessa olisi mahdollista laittaa käyttäjä tekemään hänelle räätälöityä ohjelmaa. Selvitän tätä mahdollisuutta työn edetessä.</p>
 
+<h2>Päivitys #3 31.3</h2>
+
+<p>Testi DB on valmis. Se on tehty SQLitellä lokaaliin tiedostoon.</p>
+
+<figure><img src="logins-testidb.png" alt="Tietokannassa on testikäyttäjiä. Vasemmalla tietokannan rakennetta. Harkkatyöhön tulee näkymä, jossa käyttäjiä voi tarkistella, sekä toinen näkymä heidän muokkaamista varten."/><figcaption>Tietokannassa on testikäyttäjiä. Vasemmalla tietokannan rakennetta. Harkkatyöhön tulee näkymä, jossa käyttäjiä voi tarkistella, sekä toinen näkymä heidän muokkaamista varten.</figcaption></figure>
+
+<figure><img src="referral-uuid-testidb.png" alt="Alkuperäinen suunnitelma uuid luomiseksi ei toiminut. Testikäytössä random() on riittävä ratkaisu."/><figcaption>Alkuperäinen suunnitelma uuid luomiseksi ei toiminut. Testikäytössä random() on riittävä ratkaisu.</figcaption></figure>
+
+<figure><img src="signup-referrels-testidb.png" alt="Valtaosa toiminnallisuudesta koskee user_notifications taulua. Uudet käyttäjät luodaan tähän. Käyttäjillä on muutamia omaisuuksia, joita tulevassa frontendissä. voi säädellä. Varsinainen sovellus käsittelee tiedon tästä taulusta tunnin välein, mutta testaamisen kannalta sillä ei ole väliä, vaan onnistuneessa harkkatyössä riittää, että tietoa voi syöttää tähän tauluun oikeassa muodossa. "/><figcaption>Valtaosa toiminnallisuudesta koskee user_notifications taulua. Uudet käyttäjät luodaan tähän. Käyttäjillä on muutamia omaisuuksia, joita tulevassa frontendissä. voi säädellä. Varsinainen sovellus käsittelee tiedon tästä taulusta tunnin välein, mutta testaamisen kannalta sillä ei ole väliä, vaan onnistuneessa harkkatyössä riittää, että tietoa voi syöttää tähän tauluun oikeassa muodossa. </figcaption></figure>
+
+<figure><img src="signup-referrels-testidb-1.png" alt="Käyttäjää luodessa user_referrals tietojen lisäksi user_notificationsiin syötetään käyttäjälle menevät ilmoitustyypit. Näiden valitseminen tulee toiminnallisuudeksi frontendiin."/><figcaption>Käyttäjää luodessa user_referrals tietojen lisäksi user_notificationsiin syötetään käyttäjälle menevät ilmoitustyypit. Näiden valitseminen tulee toiminnallisuudeksi frontendiin.</figcaption></figure>
+
+
 </body>
 </html>
+
+
+
+<h1>Harkkatyö</h1>
+
+<h2>Tausta</h2>
+
+<p>Startupin käyttäjätietokantaa päivitetään tällä hetkellä skripteillä (koko tiimi, yleisimmät toimenpiteet), tai SQL komennoilla (devaaja, erikoisemmat toimenpiteet). </p>
+
+<p>Käytössä on PostgreSQL tietokanta render.com palvelussa. </p>
+
+<h2>Tarve</h2>
+
+<p>Devaajan kallisarvoista aikaa voisi säästää jos tiimi voisi itsenäisesti tehdä kaiken käyttäjähallinnan. Toisaalta tiimi vois tehdä käyttäjähallintaa tehokkaammin kaikkialla saatavilla olevalla WebApplikaatiolla, jossa olisi kattavasti käyttäjähallintaan tarvittavat toiminnot.</p>
+
+<h2>Toimintamalli</h2>
+
+<p>Sovelluksen toimintamalli on automatisoitu versio skripteistä. </p>
+
+<h3>Palvelin </h3>
+
+<p>Vastailee HTTP pyyntöihin ja pyörittää SQL komennot WebApplikaatiosta tulevien pyyntöjen mukaisesti.</p>
+
+<h3>Frontend</h3>
+
+<p>Selain-frontend, josta voi valita komentotyypin ja antaa tarvittavat inputit palvelimen suorittamia SQL-hakuja varten. </p>
+
+<figure><img src="aloitus.png"/></figure>
+
+<p><em>Kirjautuminen tapahtuu käyttäjätunnuksella ja salasanalla. Kirjautumisen jälkeen aukeaa lista käyttäjistä ja heidän organisaatioista. </em></p>
+
+<figure><img src="luo-paivita.png"/></figure>
+
+<p><em>Käyttäjähallintaruudut</em></p>
+
+<h2>Toteutus</h2>
+
+<p>Harjoitustyö kehitetään HTML, CSS, JavaScript, node.js, Express ja NPM teknologioilla. Se julkaistaan render.com palvelussa ja koodi tulee näkyviin GitHub palveluun. </p>
+
+<h2>Testaus ja tietokanta</h2>
+
+<p>Testaamista varten käytetään PostgreSQL:ää kevyempää SQL tietokantaa, jonne luodaan testidataa. H2 tai <a href="https://expressjs.com/en/guide/database-integration.html#sqlite">SQLite</a> vaikuttavat mahdollisilta tässä vaiheessa. MySQL löytyy dokumentaatio sekä <a href="https://render.com/docs/deploy-mysql">render.com</a> käyttöönottoon, että valmis <a href="https://expressjs.com/en/guide/database-integration.html#mysql">Express</a> moduuli ja vaikuttaa potentiaalisimmalta. (Vinkit sopiviin kiinnostaa.)</p>
+
+<p>Testidatan vaatimuksena on, että se vastaa startupin tietokannan rakennetta. </p>
+
+<h2>Tietoturva</h2>
+
+<p><a href="https://12factor.net/config" title="config">Kirjautumistietojen</a> tallentamiseen ja hallitsemiseen käytetään environment -muuttujia <a href="https://www.freecodecamp.org/news/how-to-use-node-environment-variables-with-a-dotenv-file-for-node-js-and-npm/" title="DotEnv freecodecamp">DotEnv NPM paketilla</a>. </p>
+
+<p>WebApplikaatio suojataan salasanalla. Esimerkiksi <a href="https://www.npmjs.com/package/password-protected" title="password-protected">password-protected NPM paketti</a> vaikuttaa mahdolliselta. (Vinkit sopiviin kiinnostaa.)</p>
+
+<p>Osa tietoturvasta toteutetaan madaltamalla riskejä. Sovellukseen tulee näkyviin minimimäärä käyttäjäkohtaista tietoa.</p>
+
+<h2>Päivitys #1 25.3</h2>
+
+<p>SQLite vaikuttaa parhaimmalta testaustietokannalta. Siihen löytyy myös erillinen <a href="https://sqlitebrowser.org">browser</a>.</p>
+
+<p>Tietokantayhteyteen löytyi parempi paketti: <a href="https://knexjs.org">Knex.js</a>. Sen pystyy ilmeisesti suoraan konfiguroimaan testivaiheessa ottamaan yhteys SQLite testitietokantaan ja tuotannossa PostgreSQL tietokantaan. Katso myös <a href="https://stackoverflow.com/questions/16978256/what-is-node-env-and-how-to-use-it-in-express">NODE<em>ENV</em></a>.</p>
+
+<p>Suunnitelma tällä hetkellä: </p>
+
+<ol>
+	<li>Luo taulut ja tietokanta SQLitellä</li>
+	<li>Testaa toimivuus luomalla käyttäjä SQL komennoilla</li>
+	<li>Tee varsinainen harkkatyö</li>
+</ol>
+
+<h2>Päivitys #2 30.3</h2>
+
+<p>Startupin tietokannan rakenteen kopioimiseksi löytyi migraatiot. Ne ovat PostgreSQL:ää. SQL tiedostoja on 35 kpl, jotka jokainen suoritetaan SQL clientillä. Teen syöttämistä komentoriviklientilla, lukuunottamatta debuggingia, johon SQLite Browser antaa tarkemman/vaihtoehtoisen virhekoodin. </p>
+
+<p>Muutamia eroavaisuuksia on ilmennyt:</p>
+
+<ol>
+	<li>TIMSESTAMPTZ ei ole olemassa SQLite, korvaan sen pelkällä TIMESTAMP, TIMESTAMP syntaksissa myös pientä eroa (NOW() vs. CURRENT<em>TIMESTAMP)
+		</em></li>
+	<li> SERIAL tietotyyppiä ei ole SQLite, INTEGER ja ROWID korvaa.</li>
+	<li>ALTER TABLE table ADD COLUMN IF NOT EXISTS: IF NOT EXISTS ei ole SQLite, toimii ilmankin, mutta pitää olla tarkempi</li>
+	<li>CREATE EXTENSION IF NOT EXISTS &quot;uuid-ossp”: extensionia ei ole SQLitessä, kokeilen käyttää uuid tekemiseen: <code>char(36) default (lower(hex(randomblob(4)))  &#39;-&#39;  lower(hex(randomblob(2)))  &#39;-4&#39;  substr(lower(hex(randomblob(2))),2)  &#39;-&#39;  substr(&#39;89ab&#39;,abs(random()) % 4 + 1, 1)  substr(lower(hex(randomblob(2))),2)  &#39;-&#39;  lower(hex(randomblob(6)))),
+		</code></li>
+</ol>
+
+
+
