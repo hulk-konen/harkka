@@ -108,6 +108,34 @@
 <figure><img src="user-notifications-testidb.png" alt="Käyttäjää luodessa user_referrals tietojen lisäksi user_notificationsiin syötetään käyttäjälle menevät ilmoitustyypit. Näiden valitseminen tulee toiminnallisuudeksi frontendiin."/><figcaption>Käyttäjää luodessa user_referrals tietojen lisäksi user_notificationsiin syötetään käyttäjälle menevät ilmoitustyypit. Näiden valitseminen tulee toiminnallisuudeksi frontendiin.</figcaption></figure>
 
 <p>Selvitettävää: SQLite pyörittäminen pilvipalvelussa.</p>
+
+<h2>Päivitys #4 3.4</h2>
+
+<p>Knex.js osoittautui hieman odotuksia työläämmäksi konfiguroida. Se kannatti kuitenkin tehdä, jotta pääsen käyttämään ENV muuttujia ja kätevää SQLite tietokantaa testausvaiheessa. Löysin lopulta <a href="https://blog.shahednasser.com/knex-js-tutorial-for-beginners/">täältä</a> hyvän tutoriaalin. Laadin tutoriaalia seuraten serverin, jossa on GET metodi käyttäjälistauksen hakemiseksi ja POST käyttäjän lisäämiseksi (sekä SQLite3 tietokantatiedosto, migraatiotiedosto jne). </p>
+
+<p>Tein muutoksia tutoriaalin verrattuna:</p>
+
+<ul>
+	<li>SQLite3 paketti NPM:ässä sisältää tietoturvavaroituksia. Tästä johtuen käytän better-sqlite3 pakettia. </li>
+	<li>Tutoriaalin POST pyyntö johtaa virheeseen <code>”TypeError: SQLite3 can only bind numbers, strings, bigints, buffers, and null”</code>. Tämä näytti johtuvan POST pyynnön palautuksesta. Muokkasin pyyntöä niin, että se palauttaa nyt pelkästään uuden käyttäjän ID numeron ja virhe poistui. Tämä ei ole oleellista jatkoa varten.</li>
+</ul>
+
+<p>Muita ongelmia:</p>
+
+<ul>
+	<li>Sain erikoisia virheitä SQLite3 pakettien asennukseen liittyen. Lopulta Xcode CL tools asennus + node-gyp asennus ratkaisi ne. </li>
+</ul>
+
+<figure><img src="dependencies.png" alt="Tällä hetkellä tälläiset paketit käytössä."/><figcaption>Tällä hetkellä tälläiset paketit käytössä.</figcaption></figure>
+
+<figure><img src="user-get.png" alt="GET, ei ongelmia tässä."/><figcaption>GET, ei ongelmia tässä.</figcaption></figure>
+
+<figure><img src="user-post.png" alt="POST, tämän saaminen toimimaan kesti."/><figcaption>POST, tämän saaminen toimimaan kesti.</figcaption></figure>
+
+<p>Serveripuoli on nyt hyvässä vaiheessa muokattavaksi startupin tietokantaa varten. Opin tässä vaiheessa paljon NPM:stä, esimerkiksi globaalin asentamisen, pakettien etsintää, uninstall jne.</p>
+
+<p>Seuraavaksi: serverin yhdistäminen oikeaan testaustietokantaan + käyttäjän lisäys SQL pyynnön luominen Knex.js:llä.</p>
+
 </body>
 </html>
 
