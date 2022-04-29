@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <title>Harjoitustyöraportti</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+   </head>
+<body>
+
+<h1>Harjoitustyödokumentaatio</h1>
+
+<p>27.4.20222</p>
+
+<p>Tommi Hulkkonen</p>
+
+<p>Harjoitustyön nimi: Startup Dashboard</p>
+
+<p>Kurssi: TTC2080</p>
+
+<p>Linkki työhön: <a href="https://dashboard-frontend-h0lc.onrender.com">https://dashboard-frontend-h0lc.onrender.com</a></p>
+
+<p>Lähdekoodit: <a href="https://github.com/hulk-konen/dashboard-server">Backend ja tietokanta</a> sekä <a href="https://github.com/hulk-konen/dashboard-frontend">Frontend</a>.</p>
+
+<p>Suunnitelma ja päiväkirja: <a href="https://harkkasuunnitelma.onrender.com/suunnitelma.html">https://harkkasuunnitelma.onrender.com/suunnitelma.html</a></p>
+
+<h2>Tehtävän kuvaus</h2>
+
+<p>Startupin käyttäjähallintasovellus. Mahdollistaa uuden käyttäjän lisäämisen ja olemassaolevien käyttäjien tietojen tarkistamisen käyttäjätukea varten. Yhdistetään myöhemmin olemassaolevaan tietokantaan, josta aiheutuu paljon yhteensopivuus- ja tietoturvavaatimuksia. </p>
+
+<h2>Käytännön toteutuksen selostus</h2>
+
+<figure><img src="raportti-aloitus.png" alt="Aloitusnäkymä. Sovellus hakee tietokannasta aktiiviset käyttäjät."/><figcaption>Aloitusnäkymä. Sovellus hakee tietokannasta aktiiviset käyttäjät.</figcaption></figure>
+
+<figure><img src="raportti-details.png" alt="Käyttäjää painamalla oikeaan palstaan aukeaa olennaiset lisätiedot käyttäjätukea varte."/><figcaption>Käyttäjää painamalla oikeaan palstaan aukeaa olennaiset lisätiedot käyttäjätukea varte.</figcaption></figure>
+
+<figure><img src="raportti-lisays.png" alt="Add näkymä. Sovelluksen käyttäjät tietävät mitä tietoa tähän on tarkoitus syöttää. Lisää painikkeella tiedot siirtyvät tietokantaan."/><figcaption>Add näkymä. Sovelluksen käyttäjät tietävät mitä tietoa tähän on tarkoitus syöttää. Lisää painikkeella tiedot siirtyvät tietokantaan.</figcaption></figure>
+
+<figure><img src="raportti-lisatty.png" alt="Onnistunut lisäys kuitataan lomakkeen alla. Epäonnistuminen ilmoitetaan errorilla. Painikkeen painaminen tyhjentää kentät uutta syöttämistä varten. "/><figcaption>Onnistunut lisäys kuitataan lomakkeen alla. Epäonnistuminen ilmoitetaan errorilla. Painikkeen painaminen tyhjentää kentät uutta syöttämistä varten. </figcaption></figure>
+
+<figure><img src="raportti-puute.png" alt="Vaillinnaista tietoa."/><figcaption>Vaillinnaista tietoa.</figcaption></figure>
+
+<figure><img src="raportti-error.png" alt="Huom error. Tietokantaan on myös rakennettu tiedon muodon tarkusta, jotta väärästä tiedosta lähtee error."/><figcaption>Huom error. Tietokantaan on myös rakennettu tiedon muodon tarkusta, jotta väärästä tiedosta lähtee error.</figcaption></figure>
+
+<p><strong>Huom! </strong>Tässä lisätyt käyttäjät eivät näy suoraan aloitusnäkymän listauksessa. Pending userit menevät Startupin varsinaisen backendin käsiteltäväksi, josta ne siirtyvät active usereiksi. Koska sovellusta ei ole vielä yhdistetty lopulliseen ympäristöön, tätä ei siis tapahdu.</p>
+
+<h2>Sovelluksen kokonaisrakenne </h2>
+
+<p><a href="https://harkkasuunnitelma.onrender.com/suunnitelma.html">(Päiväkirja tämän sivun lopussa)</a></p>
+
+<h3>Sovellus muodostuu backendistä ja frontendistä</h3>
+
+<p>Näiden yhteys on toteutettu Expressillä ja Fetch APIlla. </p>
+
+<figure><img src="raportti-yhteys-front.png" alt="loadUsers noutaa yo. osoitteesta tietoa fetch APIlla. (frontend)"/><figcaption>loadUsers noutaa yo. osoitteesta tietoa fetch APIlla. (frontend)</figcaption></figure>
+
+<figure><img src="raportti-yhteys-express.png" alt="Osoite luodaan Expressillä. (backend)"/><figcaption>Osoite luodaan Expressillä. (backend)</figcaption></figure>
+
+<p>Tähän liittyy myös CORS <code>app.use(cors());</code> joka avaa backendin yhteyden frontendille. </p>
+
+<h3>Backend</h3>
+
+<p>Backend on Node.JS applikaatio. Riippuvuudet:</p>
+
+<pre><code>  &quot;dependencies&quot;: {
+    &quot;better-sqlite3&quot;: &quot;^7.5.0&quot;,
+    &quot;body-parser&quot;: &quot;^1.19.2&quot;,
+    &quot;cors&quot;: &quot;^2.8.5&quot;,
+    &quot;dotenv&quot;: &quot;^16.0.0&quot;,
+    &quot;express&quot;: &quot;^4.17.3&quot;,
+    &quot;knex&quot;: &quot;^1.0.4&quot;,
+    &quot;nodemon&quot;: &quot;^2.0.15&quot;</code></pre>
+
+<p>Kurssilta ei tuttu on Knex.JS, joka hoitaa tietokantayhteyttä, sekä siihen liittyvä better-sqlite3. Lisäksi dotenv on environment -muuttujien hallintaan käytössä. </p>
+
+<p>Tietokanta on tällä hetkellä SQLite sekä kehitys, että tuotantoympäristössä. Tulevaisuudessa sovellus on tarkoitus yhdistää PostgreSQL kantaan, johon Knex.JS pitäisi liittyä myös ilman ongelmia. </p>
+
+<p>Loin tietokannan PostgreSQL tietokantaan olemassaolevien migraatioiden avulla. Tämä oli turha ja työläs vaihe: Tietokannassa on tehtävää varten turhia tauluja, sensitiivistä dataa piti poistaa ja toisaalta komennot vaativat paljon muokkaamista toimiakseen SQLitenä. <em>Ensi kerralla</em> tekisin suoraan joko SQLite tietokannan tarvittavilla ominaisuuksilla, tai säätäisin PostgreSQL toimimaan lokaalisti. </p>
+
+<figure><img src="raportti-taulut.png" alt="Tietokannassa on tulevaisuutta varten tauluja joita ei tässä työssä käytetä millään tavalla. "/><figcaption>Tietokannassa on tulevaisuutta varten tauluja joita ei tässä työssä käytetä millään tavalla. </figcaption></figure>
+
+<figure><img src="raportti-users.png" alt="users taulussa on käyttäjätietoa. "/><figcaption>users taulussa on käyttäjätietoa. </figcaption></figure>
+
+<figure><img src="raportti-referrals.png" alt="signup_referrals on tärkein taulu käyttäjän luontia varten. Huom käyttäjät joilla ei ole resultant_user_id: he ovat vielä pending ja Startupin sovellus ei ole käsitellyt heitä. "/><figcaption>signup_referrals on tärkein taulu käyttäjän luontia varten. Huom käyttäjät joilla ei ole resultant_user_id: he ovat vielä pending ja Startupin sovellus ei ole käsitellyt heitä. </figcaption></figure>
+
+<figure><img src="raportti-notifications.png" alt="user_notifications on toinen taulu johon syötetään käyttäjän luonti dataa."/><figcaption>user_notifications on toinen taulu johon syötetään käyttäjän luonti dataa.</figcaption></figure>
+
+<p>(Muita tauluja ei tarvita sovelluksen toimintaan. Kolmen taulun tekeminen tyhjästä olisi ollut triviaalia…)</p>
+
+<h4>Tietokantafunktiot</h4>
+
+<pre><code>app.get(&#39;/users&#39;, (req, res) =&gt; {
+    knex(&#39;logins&#39;) ...</code></pre>
+
+<p>Hakee käyttäjät logins taulusta. Käytetään käyttäjälistaukseen.</p>
+
+<pre><code>app.get(&#39;/user/:id&#39;, (req, res) =&gt; {
+    knex(&#39;users&#39;)
+    //users tauluun joinataan signup_referrals taulu, jossa lisätietoja käyttäjästä
+    //huom. resultant_user_id tyhjä ennen Startupin varsinaisen backendin käsittelyä
+    .join(&#39;signup_referrals&#39;, &#39;signup_referrals.resultant_user_id&#39;, &#39;=&#39;, &#39;users.id&#39;) ...</code></pre>
+
+<p>Hakee yksittäisen käyttäjän id:n perusteella.</p>
+
+<pre><code>app.post(&#39;/user&#39;, (req, res) =&gt; { ...</code></pre>
+
+<p>Käyttäjän lisäysfunktio.</p>
+
+<pre><code>const path = require(&#39;path&#39;);
+// Update with your config settings.
+
+module.exports = {
+
+  development: {
+    client: &#39;better-sqlite3&#39;,
+    connection: {
+      filename: path.join(__dirname, &#39;db.sqlite3&#39;)
+    },
+    useNullAsDefault: true
+  },
+// päivitetään oikealla production tietokannalla aikanaan
+  production: {
+    client: &#39;better-sqlite3&#39;,
+    connection: {
+      filename: path.join(__dirname, &#39;db.sqlite3&#39;)
+    },
+    useNullAsDefault: true
+  }
+
+};</code></pre>
+
+<p>Backendistä on vielä hyvä tietää knexfile.js. Siellä pystyy näppärästi vaihtelemaan käytettyä tietokantaa ympäristön mukaan.</p>
+
+<figure><img src="raportti-render-env.png" alt="Sovellus toimii render.com palvelussa. Siellä voi näppärästi syöttää env variablesit."/><figcaption>Sovellus toimii render.com palvelussa. Siellä voi näppärästi syöttää env variablesit.</figcaption></figure>
+
+<h3>Frontend</h3>
+
+<p>Frontend koostuu index ja add html tiedostoista, tyylitiedosto ja code.js. </p>
+
+<p><strong>index.html</strong> lähtee pyörimään tällä:</p>
+
+<pre><code>&lt;body onload=&quot;init()&quot;&gt;</code></pre>
+
+<p>code.js funktiot on kommentoitu tarkemmin koodissa. Ne hakevat tiedot ja luovat käyttäjälistauksen. Voisin nostaa sieltä fetch komennot: </p>
+
+<pre><code>let response = await fetch(&#39;https://dashboard-server.onrender.com/users&#39;)</code></pre>
+
+<p>Jotka hakevat serverilta tiedot. </p>
+
+<p><strong>add.html</strong> on käyttäjälisäys sivu. </p>
+
+<pre><code>&lt;button onclick=&quot;addUser()&quot;&gt;Lisää&lt;/button&gt;</code></pre>
+
+<p>Napista painamalla käynnistyy funktio joka hoitelee työn. Tämäkin funktio on koodissa kommentoitu ja melko suoraviivainen.</p>
+
+<h3>Tietoturvasta</h3>
+
+<p>Alkuperäinen suunnitelma oli tehdä salasanasuojaus password-protected paketilla. Työn edetessä kävi ilmi, että tämä on täysin riittämätöntä tuotantoympäristössä. En siis tehnyt tätä. Environment variablesit ovat paikoillaan backendin puolella ja valmiina suojaamaan tietokannan salasanaa. </p>
+
+<h3>render.com</h3>
+
+<p>SQLite tietokanta vaati disk servicen käyttämistä. Muuten käyttö on hyvin samanlaista kuin tehtävissä dokumentoitu käyttöönotto. </p>
+
+<h2>Ansiot</h2>
+
+<ul>
+	<li>Merkittävintä on, että sain aikaiseksi jotain joka tulee oikeasti käyttöön huomattavan monimutkaiseen WebAppiin tietoturvasäätöjen jälkeen. Tämä ohjasi ja asetti paljon vaatimuksia kehitystyölle. Ilman tätä rajoitetta olisin voinut luoda jotain, joka <em>vaikuttaa</em> monimutkaisemmalta. </li>
+	<li>tietokanta-knex.js-express-fetch-html putki toimii.</li>
+	<li>Selkeää ja hyvin dokumentoitua koodia: sovellusta pystyy laajentamaan tästä moneen suuntaan. </li>
+	<li>Panostin paljon dokumentaatioon esimerkiksi päiväkirjan muodossa. </li>
+	<li>Alkuperäinen suunnitelma ylittyi add sivulla. Alunperin oli tarkoitus syöttää vain email, nyt myös kaikki käyttäjän ohjelman aloitukseen liittyvä data on kustomoitavissa. </li>
+</ul>
+
+<h2>Kehityskohteet</h2>
+
+<ul>
+	<li>Tietoturva. Koen kuitenkin, että vaadittava taso menisi huomattavasti yli tässä kurssilla käytyjä asioita. </li>
+	<li>Suunnitelmassa oli maininta käyttäjän muokkaamisesta. Jätin sen tekemättä, koska käyttäjiä ei muokata juuri koskaan. </li>
+</ul>
+
+<h3>Ajan käyttö</h3>
+
+<p>Illat, viikonloput ja hieman arkipäiviä reilun kuukauden ajan… </p>
+
+
+</body>
+</html>
